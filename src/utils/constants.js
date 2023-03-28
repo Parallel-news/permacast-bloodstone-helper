@@ -1,0 +1,1 @@
+export const PERMACAST_CONTRACT_ADDRESS = `7q-5jqkVSZI0uKFz31ZFfNHyJ_rF3SCmepbvsvHG_sk`;
