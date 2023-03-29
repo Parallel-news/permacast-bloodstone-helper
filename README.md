@@ -27,7 +27,7 @@ GET /feeds/rss/:pid
 ### Sort feeds
 
 ```console
-GET /feed/channels/sort/<criteria>
+GET /feeds/channels/sort/<criteria>
 ```
 
 | criteria key  | description |
