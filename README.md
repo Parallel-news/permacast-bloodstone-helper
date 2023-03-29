@@ -24,5 +24,36 @@ GET /feeds/rss/:pid
 
 - `pid` : channel ID
 
+### Sort feeds
+
+```console
+GET /feed/channels/sort/<criteria>
+```
+
+| criteria key  | description |
+| ------------- |:-------------:|
+| `episodescount`     | sort all created channels by episodes count     |
+| `episodescount1`      | sort non-empty channels by episodes count     |
+| `channelsactivity`     | sort channels by latest activity (episode uploads)    |
+| `channelsactivity1`| sort non-empty channels by latest activity (episode uploads) |
+
+
+### Get Protocol Stats
+
+```console
+GET /protocol/stats
+```
+
+
+Response example: 
+```json
+{
+  "total_byte_size": 72642400730,
+  "total_episodes_count": 1437,
+  "total_channels_count": 75
+}
+```
+
+
 ## License 
 This project is licensed under the [MIT License](./LICENSE)
