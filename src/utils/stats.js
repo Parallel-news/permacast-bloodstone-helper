@@ -16,7 +16,9 @@ async function getTotalPermacastSize() {
       if (episodes.length === 0) {
         continue;
       }
-      const sizeArray = episodes.map((ep) => ep.size);
+      const sizeArray = episodes
+        .map((ep) => ep.size)
+        .filter((size) => typeof size === "number");
       const podcastSize = sizeArray.reduce((a, b) => a + b, 0);
       totalSize += podcastSize;
     }
