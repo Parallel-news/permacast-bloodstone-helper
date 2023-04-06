@@ -17,7 +17,8 @@ export async function generateRss(pid) {
     const categories = podcast.categories
       .toString()
       .replaceAll("&", "&amp;")
-      .split(",");
+      .split(",")
+      .map((category) => category.charAt(0).toUpperCase() + category.slice(1));
     const podcastDesc = await getArweaveTxData(podcast.description);
     const feed = new RSS({
       custom_namespaces: {
@@ -28,7 +29,7 @@ export async function generateRss(pid) {
       managingEditor: podcast.email,
       categories: categories,
       image_url: IMG_REDICRECT,
-      site_url: `https://legacy.permacast.dev/#/podcasts/${podcast.pid}`,
+      site_url: `https://permacast.app/podcast/${podcast.pid}`,
       language: podcast.language,
       custom_elements: [
         { "itunes:image": { _attr: { href: IMG_REDICRECT } } },
@@ -63,7 +64,10 @@ export async function generateRss(pid) {
           type: episode.type,
         },
         guid: episode.eid,
-        date: episode.uploadedAt * 1000,
+        date:
+          episode.uploadedAt * 1000 < Date.now()
+            ? episode.uploadedAt * 1000
+            : episode.uploadedAt, // normalizing timestamp between Amber & Bloodstone
       });
     }
 
