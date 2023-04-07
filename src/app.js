@@ -1,6 +1,7 @@
 import { generateRss } from "./utils/rss.js";
 import { sort } from "./utils/sorting.js";
 import { stats } from "./utils/stats.js";
+import { cronjob, sleep } from "./utils/cronjob.js";
 import express from "express";
 import cors from "cors";
 
@@ -32,5 +33,7 @@ app.get("/protocol/stats", async (req, res) => {
 });
 
 app.listen(port, async () => {
+  await cronjob();
+  await sleep(15);
   console.log(`listening at PORT:${port}`);
 });
