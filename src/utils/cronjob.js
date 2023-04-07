@@ -1,10 +1,5 @@
 import axios from "axios";
-import { Exm, ContractType } from "@execution-machine/sdk";
 import { PERMACAST_CONTRACT_ADDRESS } from "./constants.js";
-import dotenv from "dotenv";
-dotenv.config();
-
-const exm = new Exm({ token: process.env.EXM_TOKEN });
 
 export async function cronjob() {
   try {
@@ -23,15 +18,31 @@ export async function cronjob() {
       };
       console.log(inputs);
 
-      const tx = await exm.functions.write(PERMACAST_CONTRACT_ADDRESS, inputs);
-      console.log(tx);
+      await exmWrite(inputs);
     }
   } catch (error) {
     console.log(error);
   }
 }
 
+
 export async function sleep(min) {
   console.log(`sleeping for ${min} min`);
   return new Promise((resolve) => setTimeout(resolve, min * 60 * 1e3));
+}
+
+
+async function exmWrite(inputs) {
+  try {
+    const req = (
+      await axios.post(`https://${PERMACAST_CONTRACT_ADDRESS}.exm.run`, inputs)
+    )?.data;
+
+    if (req?.status === "SUCCESS" && req?.data?.execution?.updated) {
+      console.log({ id: req?.data?.execution?.result?.id, status: 200 });
+    }
+  } catch (error) {
+    console.log(error);
+    console.log({ id: null, status: 400 });
+  }
 }
