@@ -1,6 +1,7 @@
 import { generateRss } from "./utils/rss.js";
 import { sort } from "./utils/sorting.js";
 import { stats } from "./utils/stats.js";
+import { getPermacastUsers } from "./utils/permacast-users.js";
 import { cronjob, sleep } from "./utils/cronjob.js";
 import express from "express";
 import cors from "cors";
@@ -29,6 +30,12 @@ app.get("/feeds/channels/sort/:type", async (req, res) => {
 app.get("/protocol/stats", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const jsonRes = await stats();
+  res.send(jsonRes);
+});
+
+app.get("/protocol/users/:address?", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  const jsonRes = await getPermacastUsers(req.params.address);
   res.send(jsonRes);
 });
 

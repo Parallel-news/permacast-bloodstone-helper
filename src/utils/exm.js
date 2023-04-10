@@ -24,6 +24,18 @@ export async function getPodcastById(pid) {
   }
 }
 
+export async function getGenericState(contract_address) {
+  try {
+    const state = (
+      await axios.get(`https://api.exm.dev/read/${contract_address}`)
+    )?.data;
+    return state;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
 export async function getArweaveTxData(txid) {
   try {
     const tx = (await axios.get(`https://arweave.net/${txid}`))?.data;
