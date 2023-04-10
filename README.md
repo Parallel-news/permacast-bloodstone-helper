@@ -27,7 +27,7 @@ GET /feeds/rss/:pid
 ### Sort feeds
 
 ```console
-GET /feeds/channels/sort/<criteria>
+GET /feed/channels/sort/<criteria>
 ```
 
 | criteria key  | description |
@@ -54,6 +54,47 @@ Response example:
 }
 ```
 
+### Get Permacast Users Profiles
+
+```console
+/protocol/users/:address?
+```
+
+Response example: 
+
+```json
+{
+  "address": "kaYP9bJtpqON8Kyy3RbqnqdtDBDUsPTQTNUCvZtKiFI",
+  "followers": [
+    "oobECSlCStnYOpqO-x6TsYQGbDxGfci-TiHMr4YxqCQ",
+    "vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0"
+  ],
+  "followings": ["vZY2XY1RD9HIfWi8ift-1_DnHLDadZMWrufSh-_rKF0"],
+  "nickname": "xylophone",
+  "bio": "co-founder of permacast.app & permaweb.news",
+  "avatar": "jNqKmxyTsp-8DsHDGMb-oLN2y2zLkVMs9ievwZ_165I",
+  "banner": "Hr_WP4mf8-SfqpWNDPtR_NpW6zumIvLer3OtPBEc2Qs",
+  "extension": {
+    "ansDomain": "xy.ar",
+    "createdPodcasts": [
+      "JYRNm0gvP1cZifS06Io2YK9gsocPr7Z5BOWwNIuQ9oI",
+      "zgtTZ64Y6yWEiAmevDaytpD_uA_nxLeufQGmySGFm-k",
+      "DLmbmcdnCq6oSU6Ypv6-25jMfMjjf6WZXM-u5uocyNM",
+      "kJ0R-P_BzuDOVLDUpU8O3D8U4thLf-fn4BZcU6S0Ndw",
+      "h9jjhu8iwIoL7_uHAakqzFL4dzgY4fyPD_q0e90kCb4",
+      "3vkRcwA6Bi4U2zUr3T9BIKfzwmztPpwboeX7I92mK38",
+      "T7HWHKp-AjIj69TQRvV4EZRVTY1J8J9zSgE668aOmC4",
+      "98yo5tvtWM7RLxj1orph-PKS9buqcMX8X-aPweqNysU",
+      "4vTYMVWWxZaU2n2OI4cC-EgC86GcOnz-CaVW7iUwPK4",
+      "J1kzYZwLpAfLSM6RkXf18i9C-O0GnFxSokNQ2BMdm10",
+      "WgMUEXJ_zctERiabTAWz6rEypDW8EAmz7iv7RlreS8s",
+      "B_gEvwsREHk-Blax_WKOYz3U5M7ja9jTqrlC64XjDZw",
+      "2886425fae84fbc16d9f772487d818b5a99dcd265405021ab59530093bbba47d453a66ce2aaf00f9f92e4219a06deb5b43524d7735f76080439e4bdae98f85a8"
+    ],
+    "episodesCount": 150
+  }
+}
+```
 
 ## License 
 This project is licensed under the [MIT License](./LICENSE)
