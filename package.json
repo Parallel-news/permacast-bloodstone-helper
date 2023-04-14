@@ -1,6 +1,6 @@
 {
   "name": "permacast-bloodstone-helper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "description": "Helpers repo for Permacast Bloodstone",
   "main": "./src/app.js",
@@ -24,8 +24,11 @@
   "homepage": "https://github.com/Parallel-news/permacast-bloodstone-helper#readme",
   "dependencies": {
     "axios": "^1.3.4",
+    "buffer-to-arraybuffer": "^0.0.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "rss": "^1.2.2"
+    "rss": "^1.2.2",
+    "string-strip-html": "^13.2.2",
+    "xml2js": "^0.5.0"
   }
 }
