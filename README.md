@@ -95,6 +95,14 @@ Response example:
   }
 }
 ```
+### Import RSS feeds
+
+```console
+GET /import-rss/:encoded_url/:pid
+```
+
+- `endoced_url` : the RSS feed URL encoded in base64
+- pid: target channel ID
 
 ## License 
 This project is licensed under the [MIT License](./LICENSE)

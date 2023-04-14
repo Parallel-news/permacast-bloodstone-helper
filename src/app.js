@@ -3,6 +3,7 @@ import { sort } from "./utils/sorting.js";
 import { stats } from "./utils/stats.js";
 import { getPermacastUsers } from "./utils/permacast-users.js";
 import { cronjob, sleep } from "./utils/cronjob.js";
+import { importRssFeed } from "./utils/rss-import.js";
 import express from "express";
 import cors from "cors";
 
@@ -36,6 +37,13 @@ app.get("/protocol/stats", async (req, res) => {
 app.get("/protocol/users/:address?", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const jsonRes = await getPermacastUsers(req.params.address);
+  res.send(jsonRes);
+});
+
+app.get("/import-rss/:encoded_url/:pid", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  const { encoded_url, pid } = req.params;
+  const jsonRes = await importRssFeed(encoded_url, pid);
   res.send(jsonRes);
 });
 
