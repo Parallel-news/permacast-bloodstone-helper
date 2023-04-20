@@ -38,9 +38,9 @@ export async function getGenericState(contract_address) {
 
 export async function getArweaveTxData(txid) {
   try {
-    const tx = (await axios.get(`https://arweave.net/${txid}`))?.data;
+    const tx = (await axios.get(`https://arseed.web3infra.dev/${txid}`))?.data;
     return tx;
   } catch (error) {
-    throw error;
+    return "";
   }
 }

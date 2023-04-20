@@ -55,8 +55,44 @@ export async function importRssFeed(encodedRssUrl, pid) {
   }
 }
 
+export async function getPodcastMetadata(encodedRssUrl) {
+  try {
+    let rssJson;
+    const rssUrl = atob(encodedRssUrl);
+    await isValidUrl(rssUrl);
+    const res = [];
+
+    const rssXml = (await axios.get(rssUrl)).data;
+    const json = parseString.parseString(
+      rssXml,
+      (err, result) => (rssJson = result.rss)
+    );
+
+    const cover = rssJson.channel?.[0]?.["itunes:image"]?.[0]?.["$"]?.["href"];
+    const language = rssJson.channel?.[0]?.language?.[0];
+    const title = rssJson.channel?.[0]?.title?.[0];
+    const categories =
+      rssJson.channel?.[0]?.["itunes:category"]?.[0]?.["$"]?.["text"];
+    const isExplicit = rssJson.channel?.[0]?.["itunes:explicit"]?.[0];
+    const description = rssJson.channel?.[0]?.["description"]?.[0];
+    const author = rssJson.channel?.[0]?.["itunes:author"]?.[0];
+
+    return {
+      cover,
+      language,
+      title,
+      categories,
+      isExplicit,
+      description,
+      author,
+    };
+  } catch (error) {
+    console.log(error);
+    return { error: "rss-metadata-error" };
+  }
+}
+
 async function isValidUrl(url) {
   const isValid = /^(ftp|http|https):\/\/[^ "]+$/.test(url);
   return isValid;
 }
-
