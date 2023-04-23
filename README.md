@@ -107,10 +107,10 @@ GET /import-rss/:encoded_url/:pid
 ### Get RSS podcast metadata
 
 ```console
-GET /rss-podcast-metadata/:pid
+GET /rss-podcast-metadata/:encoded_url
 ```
 
-- pid: target channel ID
+- `endoced_url` : the RSS feed URL encoded in base64
 
 ## License 
 This project is licensed under the [MIT License](./LICENSE)
