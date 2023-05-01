@@ -40,7 +40,7 @@ app.get("/protocol/users/:address?", async (req, res) => {
   res.send(jsonRes);
 });
 
-app.get("/import-rss/:encoded_url/:pid", async (req, res) => {
+app.get("/import-rss/:encoded_url/:pid?", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const { encoded_url, pid } = req.params;
   const jsonRes = await importRssFeed(encoded_url, pid);
