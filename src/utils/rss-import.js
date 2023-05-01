@@ -10,11 +10,20 @@ async function getEpisodeObject(e) {
     // episode metadata from the RSS
     const link = e.enclosure?.[0]?.["$"].url;
     const fileType = e.enclosure?.[0]?.["$"]?.type;
+    const isExplicit = e?.["itunes:explicit"]?.[0] === "true" ? "yes" : "no"; // compatible with Permacast contract spec
     const title = e?.title?.[0];
     const pubDate = e?.pubDate?.[0];
     const duration = e?.["itunes:duration"]?.[0];
     const description = stripHtml(e?.description?.[0])?.result;
-    return { link, fileType, title, pubDate, duration, description };
+    return {
+      link,
+      fileType,
+      isExplicit,
+      title,
+      pubDate,
+      duration,
+      description,
+    };
   } catch (error) {
     throw error;
   }
