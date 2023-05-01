@@ -36,11 +36,30 @@ export async function importRssFeed(encodedRssUrl, pid) {
     await isValidUrl(rssUrl);
     const res = [];
 
-    const podcast = await getPodcastById(pid);
-    assert.equal(podcast.pid === pid, true);
-    const uploadedEpisodes = podcast.episodes.map(
-      (episode) => episode.episodeName
-    );
+    if (pid) { // provide PID to sync an existing imported RSS feed
+      const podcast = await getPodcastById(pid);
+      assert.equal(podcast.pid === pid, true);
+      const uploadedEpisodes = podcast.episodes.map(
+        (episode) => episode.episodeName
+      );
+
+      const rssXml = (await axios.get(rssUrl)).data;
+      const json = parseString.parseString(
+        rssXml,
+        (err, result) => (rssJson = result.rss)
+      );
+
+      const cover = rssJson.channel[0]["itunes:image"];
+      const rssEpisodes = rssJson.channel[0].item;
+
+      for (const episode of rssEpisodes.reverse()) {
+        if (!uploadedEpisodes.includes(episode?.title?.[0])) {
+          res.push(await getEpisodeObject(episode));
+        }
+      }
+
+      return res;
+    }
 
     const rssXml = (await axios.get(rssUrl)).data;
     const json = parseString.parseString(
@@ -52,9 +71,7 @@ export async function importRssFeed(encodedRssUrl, pid) {
     const rssEpisodes = rssJson.channel[0].item;
 
     for (const episode of rssEpisodes.reverse()) {
-      if (!uploadedEpisodes.includes(episode?.title?.[0])) {
-        res.push(await getEpisodeObject(episode));
-      }
+      res.push(await getEpisodeObject(episode));
     }
 
     return res;

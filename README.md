@@ -98,11 +98,12 @@ Response example:
 ### Import RSS feeds
 
 ```console
-GET /import-rss/:encoded_url/:pid
+GET /import-rss/:encoded_url/:pid?
 ```
 
 - `endoced_url` : the RSS feed URL encoded in base64
-- pid: target channel ID
+- `pid`: target channel ID (optional, if provided, the response will resync the imported RSS feed on Permacast and filter any imported episode)
+
 
 ### Get RSS podcast metadata
 
