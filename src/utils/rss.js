@@ -1,10 +1,16 @@
 import RSS from "rss";
-import { getPodcastById, getArweaveTxData } from "./exm.js";
+import {
+  getPodcastById,
+  getArweaveTxData,
+  getIndexingState,
+  exmWriteIndex,
+} from "./exm.js";
 import axios from "axios";
 
 export async function generateRss(pid) {
   try {
     const podcast = await getPodcastById(pid);
+    const indexingContractState = await getIndexingState();
 
     if (JSON.stringify(podcast) === "{}") {
       const feed = new RSS();
@@ -19,7 +25,16 @@ export async function generateRss(pid) {
       .replaceAll("&", "&amp;")
       .split(",")
       .map((category) => category.charAt(0).toUpperCase() + category.slice(1));
-    const podcastDesc = await getArweaveTxData(podcast.description);
+
+    const podcastDesc =
+      podcast.description in indexingContractState
+        ? indexingContractState[podcast.description]
+        : await getArweaveTxData(podcast.description);
+
+    if (!(podcast.description in indexingContractState)) {
+      await exmWriteIndex(podcast.description);
+    }
+
     const feed = new RSS({
       custom_namespaces: {
         itunes: "http://www.itunes.com/dtds/podcast-1.0.dtd",
@@ -54,7 +69,15 @@ export async function generateRss(pid) {
     });
 
     for (let episode of podcast.episodes) {
-      const episodeDesc = await getArweaveTxData(episode.description);
+      const episodeDesc =
+        episode.description in indexingContractState
+          ? indexingContractState[episode.description]
+          : await getArweaveTxData(episode.description);
+
+      if (!(episode.description in indexingContractState)) {
+        await exmWriteIndex(episode.description);
+      }
+
       feed.item({
         title: episode.episodeName,
         description: episodeDesc,
