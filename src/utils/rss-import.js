@@ -25,6 +25,7 @@ async function getEpisodeObject(e) {
       pubDate,
       duration,
       description,
+
     };
   } catch (error) {
     throw error;
@@ -104,6 +105,7 @@ export async function getPodcastMetadata(encodedRssUrl) {
     const isExplicit = rssJson.channel?.[0]?.["itunes:explicit"]?.[0];
     const description = rssJson.channel?.[0]?.["description"]?.[0];
     const author = rssJson.channel?.[0]?.["itunes:author"]?.[0];
+    const email = rssJson.channel[0]?.["itunes:owner"]?.[0]?.["itunes:email"]?.[0];
 
     return {
       cover,
@@ -113,6 +115,7 @@ export async function getPodcastMetadata(encodedRssUrl) {
       isExplicit,
       description,
       author,
+      email,
     };
   } catch (error) {
     console.log(error);
